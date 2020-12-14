@@ -1,27 +1,25 @@
+//declaring constants into global memory that require express
 const fs = require('fs');
 const path = require('path');
 
 module.exports = app => {
 
-    // Setup notes variable
+    //variable to setup the notes
     fs.readFile("db/db.json","utf8", (err, data) => {
 
         if (err) throw err;
 
         var notes = JSON.parse(data);
 
-        // API ROUTES
-        // ========================================================
-    
-        // Setup the /api/notes get route
+        //get method to retrieve notes 
         app.get("/api/notes", function(req, res) {
-            // Read the db.json file and return all saved notes as JSON.
+            //respond with saved notes in json
             res.json(notes);
         });
 
-        // Setup the /api/notes post route
+        //APP post route to post a new note to notes array
         app.post("/api/notes", function(req, res) {
-            // Receives a new note, adds it to db.json, then returns the new note
+            //responds with any notes already in notes array, addes new note to array, then displays array with new note
             res.json(notes[req.params.id]);
             let newNote = req.body;
             notes.push(newNote);
@@ -29,29 +27,27 @@ module.exports = app => {
             return console.log("Added new note: "+newNote.title);
         });
 
-        // Retrieves a note with specific id
+        //APP get to retrieve any note by id
         app.get("/api/notes/:id", function(req,res) {
-            // display json for the notes array indices of the provided id
+            //respond with notes array in json with specific note id
             res.json(notes[req.params.id]);
         });
 
-        // Deletes a note with specific id
+        //app delete method to delete any note by its id
         app.delete("/api/notes/:id", function(req, res) {
-            res.json(notes[req.params.id]);
-            notes.splice(req.params.id, 1);
-            updateDb();
+            res.json(notes[req.params.id]);//respond with notes array
+            notes.splice(req.params.id, 1);//removed requested note by id
+            updateDb();//update database and display note array
             console.log("Deleted note with id");
         });
 
-        // VIEW ROUTES
-        // ========================================================
-
-        // Display notes.html when /notes is accessed
+   
+        //Display notes.html when /notes is accessed
         app.get('/notes', function(req,res) {
             res.sendFile(path.join(__dirname, "../public/notes.html"));
         });
         
-        // Display index.html when all other routes are accessed
+        //Display index.html when all other routes are accessed
         app.get('*', function(req,res) {
             res.sendFile(path.join(__dirname, "../public/index.html"));
         });
