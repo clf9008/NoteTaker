@@ -15,7 +15,7 @@ Navigate to the directory folder using the command prompt.
 Run npm install to install all  required dependencies. To start the application, run node server.js in your terminal, and then open http://localhost:3000 in your browser. The Note Taker app is live on Heroku for you to use as well.
 
 #### Preview:
-(https://github.com/clf9008/NoteTaker/blob/main/db/public/assets/ApplicationScreenshot.png)
+![App Preview](https://github.com/clf9008/NoteTaker/blob/main/db/public/assets/ApplicationScreenshot.png "App Preview Image")
 
 ##### Deployed Link:
 Note Taker App
